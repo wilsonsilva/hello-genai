@@ -5,7 +5,7 @@ from agent import Agent
 load_dotenv()
 
 
-agent = Agent(model="gemini-3-pro-preview")
+agent = Agent(model="gemini-2.5-flash")
 response1 = agent.run(
     contents="Hello, What are top 3 cities in Germany to visit? Only return the names of the cities."
 )
