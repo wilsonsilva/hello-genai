@@ -9,3 +9,8 @@ dependencies = [
     "google-genai>=1.52.0",
     "python-dotenv>=1.2.1",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.7",
+]
