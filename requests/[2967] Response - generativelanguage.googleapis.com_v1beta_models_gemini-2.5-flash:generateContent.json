@@ -1,0 +1,55 @@
+//HTTP/1.1 200 OK
+//Content-Type: application/json; charset=UTF-8
+//Vary: Origin
+//Vary: X-Origin
+//Vary: Referer
+//Content-Encoding: gzip
+//Date: Fri, 02 Jan 2026 09:24:24 GMT
+//Server: scaffolding on HTTPServer2
+//X-XSS-Protection: 0
+//X-Frame-Options: SAMEORIGIN
+//X-Content-Type-Options: nosniff
+//Server-Timing: gfet4t7; dur=1717
+//Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+//Transfer-Encoding: chunked
+
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Alright, let's see what kind of mess you've got in your current directory. Don't tell me it's full of useless bloat.\n\n",
+            "thoughtSignature": "Ct0BAXLI2nyPpMd/RdyfGFlrVBbuAQjYnt/IV+6ZTZLpd6iQ7nV2hHK0d6N1JFJ0Uhv9WmcDoM2ZoYeGXc9dNWFUWuBQSCyML8tq0TycGGv4FpDLzihXBoVR7iMC69jq0EVTJNWEjfOElFDFvlnWi0rJs9IufEAQQKkVNs7PcpHl+n8m7pYIvwGbOCsAsA+sIg0VKPUE0kcAmU7yD8hXPxlUxPCG0+xtHF1EX57aHwWBdLYsidsYLTar5RySmnrxlM5U+TJv8eTJqhlUQbQObxy2ae1jzYfeoAuEO0nQoY8="
+          },
+          {
+            "functionCall": {
+              "name": "list_dir",
+              "args": {
+                "directory_path": "."
+              }
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0,
+      "finishMessage": "Model generated function call(s)."
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 195,
+    "candidatesTokenCount": 50,
+    "totalTokenCount": 289,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 195
+      }
+    ],
+    "thoughtsTokenCount": 44
+  },
+  "modelVersion": "gemini-2.5-flash",
+  "responseId": "yI5XaZzOMruw0-kPhNml4Qk"
+}

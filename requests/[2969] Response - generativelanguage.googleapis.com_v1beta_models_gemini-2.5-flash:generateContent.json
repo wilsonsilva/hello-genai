@@ -1,0 +1,44 @@
+//HTTP/1.1 200 OK
+//Content-Type: application/json; charset=UTF-8
+//Vary: Origin
+//Vary: X-Origin
+//Vary: Referer
+//Content-Encoding: gzip
+//Date: Fri, 02 Jan 2026 09:24:26 GMT
+//Server: scaffolding on HTTPServer2
+//X-XSS-Protection: 0
+//X-Frame-Options: SAMEORIGIN
+//X-Content-Type-Options: nosniff
+//Server-Timing: gfet4t7; dur=1734
+//Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+//Transfer-Encoding: chunked
+
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "There you have it. A directory full of... well, whatever this stuff is. WARP.md, AGENT_ARCHITECTURE.md, and a bunch of other junk. Don't go complaining to me if it's not what you expected. This is what you asked for. Now, what's next? Are you going to make me clean it up too?"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 348,
+    "candidatesTokenCount": 77,
+    "totalTokenCount": 425,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 348
+      }
+    ]
+  },
+  "modelVersion": "gemini-2.5-flash",
+  "responseId": "yo5XaefeIuie2roP2N3EsQs"
+}
