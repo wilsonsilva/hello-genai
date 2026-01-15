@@ -1,9 +1,5 @@
-from dotenv import load_dotenv
 from agent import Agent
 from file_tools import file_tools
-
-# Load environment variables from .env file
-load_dotenv()
 
 # Create an agent with file system tools
 system_instruction = """You are a helpful file management assistant.
@@ -12,7 +8,6 @@ Always be careful when writing files - make sure you understand the context firs
 When asked to work with files, use the appropriate tools."""
 
 agent = Agent(
-    model="gemini-2.5-flash",
     tools=file_tools,
     system_instruction=system_instruction,
 )

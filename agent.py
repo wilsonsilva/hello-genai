@@ -1,18 +1,20 @@
 from google import genai
 from google.genai import types
+from agent_configuration import agent_configuration
 
 
 class Agent:
     def __init__(
         self,
-        model: str,
+        model: str = None,
         tools: list = None,
         system_instruction: str = "You are a helpful assistant.",
     ):
         """Initialize a conversational agent with Google GenAI.
 
         Args:
-            model: The Gemini model identifier (e.g., "gemini-2.5-flash")
+            model: The Gemini model identifier (e.g., "gemini-2.5-flash").
+                   If not provided, uses the model from agent_configuration.
             tools: List of Python functions to use as tools
             system_instruction: System prompt that defines agent behavior
 
@@ -41,8 +43,8 @@ class Agent:
             ...     system_instruction="You are a helpful Coding Assistant."
             ... )
         """
-        self.model = model
-        self.client = genai.Client()
+        self.model = model or agent_configuration.model
+        self.client = genai.Client(api_key=agent_configuration.api_key)
         self.contents = []
         self.tools = tools or []
         self.system_instruction = system_instruction
