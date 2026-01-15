@@ -1,16 +1,7 @@
-from agent import Agent
-from file_tools import file_tools
+from agents import FileAgent
 
-# Create an agent with file system tools
-system_instruction = """You are a helpful file management assistant.
-You have access to tools for reading, writing, and listing files.
-Always be careful when writing files - make sure you understand the context first.
-When asked to work with files, use the appropriate tools."""
-
-agent = Agent(
-    tools=file_tools,
-    system_instruction=system_instruction,
-)
+# Create the file agent
+agent = FileAgent()
 
 # Example 1: List files in the current directory
 print("=" * 80)

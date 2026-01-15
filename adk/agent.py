@@ -1,6 +1,6 @@
 from google import genai
 from google.genai import types
-from agent_configuration import agent_configuration
+from .agent_configuration import agent_configuration
 
 
 class Agent:

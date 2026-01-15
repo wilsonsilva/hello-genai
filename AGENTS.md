@@ -4,9 +4,14 @@ This file provides guidance to AI agents when working with code in this reposito
 
 ## Project Overview
 
-This is a Python demonstration project for Google's GenAI (Gemini) API. The project showcases a conversational agent that maintains context across multiple interactions using the `google-genai` library.
+This is a three-tier Python framework for building AI agents with Google's Gemini API. The architecture separates reusable infrastructure (ADK - Agent Development Kit), domain-agnostic tools, and specialized agent implementations, demonstrating modular design for conversational AI with function calling capabilities.
 
-For detailed architecture, data flow diagrams, and comprehensive module documentation, see [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md).
+**Key Components**:
+- **ADK (Agent Development Kit)**: Core framework in `adk/` - provides base Agent class and configuration management
+- **Tools**: Reusable functions in `tools/` - file operations, future extensions for web, data, etc.
+- **Agents**: Specialized implementations in `agents/` - currently FileAgent, designed for easy extension
+
+For detailed architecture, data flow diagrams, module-by-module documentation, and extension patterns, see [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md).
 
 ## Environment Setup
 
@@ -73,11 +78,29 @@ uv run example_with_tools.py
 
 ## Code Architecture
 
-### Agent Class (`agent.py`)
+### Three-Tier Design
+
+1. **ADK (Agent Development Kit)** - `adk/`
+   - Core framework providing base `Agent` class and `AgentConfiguration`
+   - Model-agnostic, tool-agnostic foundation
+   - No domain knowledge or specific use cases
+
+2. **Tools** - `tools/`
+   - Reusable functions (currently: file operations)
+   - Type-hinted with descriptive docstrings
+   - Modular and shareable across agents
+
+3. **Agents** - `agents/`
+   - Specialized implementations (currently: `FileAgent`)
+   - Pre-configured with specific tools and system instructions
+   - Each can have its own `.env` configuration
+
+### Agent Class (`adk/agent.py`)
 The core `Agent` class provides:
 - **Conversation History**: Maintains context in `self.contents` as a list of message dictionaries
 - **Function Calling**: Supports tool execution via Google GenAI's native function calling
 - **Recursive Tool Execution**: When the model requests a function call, the agent executes it and automatically sends results back
+- **Configuration Management**: Uses singleton `agent_configuration` for defaults
 
 ### Function Calling Flow
 1. User message sent with tool declarations to the model

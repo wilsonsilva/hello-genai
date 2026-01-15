@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 
@@ -16,10 +17,19 @@ class AgentConfiguration:
         ValueError: If GEMINI_API_KEY is not set in environment variables.
     """
 
-    def __init__(self):
-        """Initialize the configuration by loading environment variables."""
+    def __init__(self, env_path: str | Path | None = None):
+        """Initialize the configuration by loading environment variables.
+
+        Args:
+            env_path: Optional path to .env file. If not provided, will search
+                     in standard locations (current dir, project root, etc).
+        """
         # Load environment variables from .env file
-        load_dotenv()
+        if env_path:
+            load_dotenv(env_path)
+        else:
+            # Try to find .env in standard locations
+            load_dotenv()  # First try current directory and parents
 
         # Get API key with validation
         api_key = os.getenv("GEMINI_API_KEY")
