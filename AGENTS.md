@@ -6,6 +6,8 @@ This file provides guidance to AI agents when working with code in this reposito
 
 This is a Python demonstration project for Google's GenAI (Gemini) API. The project showcases a conversational agent that maintains context across multiple interactions using the `google-genai` library.
 
+For detailed architecture, data flow diagrams, and comprehensive module documentation, see [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md).
+
 ## Environment Setup
 
 **Package Manager**: This project uses `uv` (not pip or poetry).
