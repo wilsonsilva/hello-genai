@@ -1,5 +1,3 @@
-import os
-import tempfile
 import pytest
 from tools.file_tools import read_file, write_file, list_dir
 
@@ -189,36 +187,3 @@ class TestListDir:
 
         assert isinstance(result, list)
         assert len(result) > 0
-
-
-class TestLogFunctionCallDecorator:
-    """Tests for the log_function_call decorator."""
-
-    def test_decorator_preserves_function_name(self):
-        """Test that decorator preserves the original function name."""
-        assert read_file.__name__ == "read_file"
-        assert write_file.__name__ == "write_file"
-        assert list_dir.__name__ == "list_dir"
-
-    def test_decorator_logs_function_calls(self, tmp_path, capsys):
-        """Test that decorator logs function calls."""
-        test_file = tmp_path / "test.txt"
-        test_file.write_text("content")
-
-        read_file(str(test_file))
-
-        captured = capsys.readouterr()
-        assert "[Function Call] read_file" in captured.out
-        assert str(test_file) in captured.out
-
-    def test_decorator_logs_multiple_arguments(self, tmp_path, capsys):
-        """Test that decorator logs all arguments."""
-        test_file = tmp_path / "test.txt"
-        content = "test content"
-
-        write_file(str(test_file), content)
-
-        captured = capsys.readouterr()
-        assert "[Function Call] write_file" in captured.out
-        assert str(test_file) in captured.out
-        assert content in captured.out

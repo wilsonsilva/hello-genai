@@ -64,6 +64,10 @@ hello-genai/
 │   ├── agent_configuration.py   # Configuration singleton with env loading
 │   └── README.md                # ADK documentation
 │
+├── utils/                        # Utility Functions
+│   ├── __init__.py              # Exports log_function_call
+│   └── decorators.py            # Function decorators (logging, etc.)
+│
 ├── agents/                       # Specialized Agent Implementations
 │   ├── __init__.py              # Exports FileAgent
 │   └── file_agent/              # File system specialist agent
@@ -74,6 +78,11 @@ hello-genai/
 ├── tools/                        # Reusable Tool Functions
 │   ├── __init__.py              # Exports file_tools and individual functions
 │   └── file_tools.py            # File operations: read/write/list
+│
+├── tests/                        # Test Suite
+│   ├── __init__.py              # Test package initialization
+│   ├── test_file_tools.py       # Tests for file tools
+│   └── test_decorators.py       # Tests for decorators
 │
 ├── main.py                       # Main demo with FileAgent examples
 ├── README.md                     # Quick start guide
@@ -162,16 +171,50 @@ The core framework providing infrastructure for building AI agents.
 
 ---
 
+### Utils
+
+Utility functions and decorators used across the project.
+
+#### utils/decorators.py
+
+**Purpose**: Reusable function decorators
+
+**Exports**:
+- `log_function_call` - Decorator that logs function invocations with arguments
+
+**Dependencies**:
+- `functools.wraps` - Decorator preservation
+
+**Patterns**:
+- **Decorator Pattern**: Wraps functions to add logging behavior without modifying original code
+- **Introspection**: Uses function metadata (`__name__`) and argument formatting via `repr()`
+- **Output to stdout**: Prints with `[Function Call]` prefix for easy filtering
+
+**Gotchas**:
+- Logs to stdout only - no configurable logging levels or handlers
+- Arguments are formatted with `repr()` which may be verbose for large objects
+- No option to disable logging at runtime
+- All decorated functions will log, regardless of context
+
+---
+
+#### utils/__init__.py
+
+**Purpose**: Utils package entry point
+
+**Exports**: `log_function_call` decorator
+
+---
+
 ### Tools
 
 Reusable functions that agents can use as tools.
 
-#### tools/file_tools.py (347 tokens)
+#### tools/file_tools.py
 
-**Purpose**: File system operation tools with logging decorator
+**Purpose**: File system operation tools
 
 **Exports**:
-- `log_function_call` - Decorator for logging function invocations
 - `read_file(file_path: str) -> str` - Read file contents
 - `write_file(file_path: str, contents: str) -> bool` - Write file contents
 - `list_dir(directory_path: str) -> list[str]` - List directory contents
@@ -179,10 +222,10 @@ Reusable functions that agents can use as tools.
 
 **Dependencies**:
 - `os` - File system operations and path expansion
-- `functools.wraps` - Decorator preservation
+- `utils.log_function_call` - Function call logging decorator
 
 **Patterns**:
-- **Decorator Pattern**: `@log_function_call` logs all tool invocations with arguments
+- **Decorator Pattern**: `@log_function_call` from utils logs all tool invocations with arguments
 - **Type Hints**: Functions include type annotations (required for GenAI tool schema generation)
 - **Docstrings**: Google-style docstrings with Args sections (model reads these to understand tool purpose)
 - **Tool Collection**: `file_tools` list aggregates related functions
@@ -190,7 +233,6 @@ Reusable functions that agents can use as tools.
 **Gotchas**:
 - No error handling - file operations can raise exceptions
 - `list_dir` expands `~` in paths but other functions don't
-- Decorator prints to stdout (not configurable logging)
 - `write_file` returns `True` without validating success
 - Functions are synchronous - no async support
 
@@ -261,6 +303,54 @@ Specialized agent implementations built on the ADK framework.
 
 ---
 
+### Tests
+
+Test suite for the project.
+
+#### tests/test_decorators.py
+
+**Purpose**: Tests for the log_function_call decorator
+
+**Test Coverage**:
+- Function name and docstring preservation
+- Logging with no arguments, positional arguments, keyword arguments, and mixed arguments
+- Logging with various data types (strings, numbers, lists, dicts, booleans)
+- Return value correctness
+- Exception propagation
+- Edge cases (None return, empty strings)
+- Multiple function calls
+
+**Dependencies**:
+- `pytest` - Testing framework
+- `utils.log_function_call` - Decorator under test
+
+**Patterns**:
+- **Test Class Organization**: Groups related tests in TestLogFunctionCallDecorator class
+- **Fixture Usage**: Uses pytest's `capsys` fixture to capture stdout
+- **Inline Function Decoration**: Creates test functions with decorator inside each test
+
+---
+
+#### tests/test_file_tools.py
+
+**Purpose**: Tests for file operation tools
+
+**Test Coverage**:
+- `read_file`: success, empty files, multiline content, unicode, file not found
+- `write_file`: success, overwrite, empty content, multiline, unicode, file creation, invalid paths
+- `list_dir`: empty directories, with files, with subdirectories, mixed content, not found, not a directory, tilde expansion
+
+**Dependencies**:
+- `pytest` - Testing framework
+- `tools.file_tools` - File tools under test
+
+**Patterns**:
+- **Test Class Organization**: Separate classes for TestReadFile, TestWriteFile, TestListDir
+- **Fixture Usage**: Uses pytest's `tmp_path` fixture for temporary directories
+- **Edge Case Testing**: Tests error conditions and edge cases comprehensively
+
+---
+
 ### Entry Points
 
 #### main.py (296 tokens)
@@ -304,14 +394,20 @@ This codebase demonstrates a clean separation of concerns:
    - Model-agnostic, tool-agnostic foundation
    - No domain knowledge or specific use cases
 
-2. **Tools** - `tools/`
+2. **Utils** - `utils/`
+   - Utility functions and decorators
+   - Currently: log_function_call decorator for debugging
+   - Reusable across all layers of the architecture
+   - Framework-level support utilities
+
+3. **Tools** - `tools/`
    - Reusable functions that agents can call
    - Type-hinted with descriptive docstrings
    - Currently: file system operations
    - Modular and shareable across agents
    - Domain-agnostic capabilities
 
-3. **Agents** - `agents/`
+4. **Agents** - `agents/`
    - Specialized agent implementations
    - Each agent has its own directory with optional .env
    - Pre-configured with specific tools and system instructions
@@ -474,6 +570,8 @@ graph TB
 Tools must follow these conventions for GenAI compatibility:
 
 ```python
+from utils import log_function_call
+
 @log_function_call  # Optional decorator for logging
 def tool_name(param: str, count: int = 5) -> dict:
     """Brief description of what this tool does.
@@ -663,7 +761,7 @@ uv run main.py                   # Execute main demo (4 examples)
 
 ### To debug function calls
 
-- Function calls are logged with `[Function Call]` prefix (via `@log_function_call`)
+- Function calls are logged with `[Function Call]` prefix (via `@log_function_call` from `utils/`)
 - Inspect `agent.contents` for full conversation history
 - Add print statements in `adk/agent.py:run()` method
 - Check API responses: `print(response.candidates[0].content)`

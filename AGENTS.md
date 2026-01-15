@@ -9,6 +9,7 @@ This is a three-tier Python framework for building AI agents with Google's Gemin
 **Key Components**:
 - **ADK (Agent Development Kit)**: Core framework in `adk/` - provides base Agent class and configuration management
 - **Tools**: Reusable functions in `tools/` - file operations, future extensions for web, data, etc.
+- **Utils**: Utility functions in `utils/` - decorators and helper functions
 - **Agents**: Specialized implementations in `agents/` - currently FileAgent, designed for easy extension
 
 For detailed architecture, data flow diagrams, module-by-module documentation, and extension patterns, see [docs/CODEBASE_MAP.md](docs/CODEBASE_MAP.md).
@@ -85,12 +86,17 @@ uv run example_with_tools.py
    - Model-agnostic, tool-agnostic foundation
    - No domain knowledge or specific use cases
 
-2. **Tools** - `tools/`
+2. **Utils** - `utils/`
+   - Utility functions and decorators (currently: `log_function_call` decorator)
+   - Reusable across the entire project
+   - Framework-level support utilities
+
+3. **Tools** - `tools/`
    - Reusable functions (currently: file operations)
    - Type-hinted with descriptive docstrings
    - Modular and shareable across agents
 
-3. **Agents** - `agents/`
+4. **Agents** - `agents/`
    - Specialized implementations (currently: `FileAgent`)
    - Pre-configured with specific tools and system instructions
    - Each can have its own `.env` configuration
@@ -113,7 +119,7 @@ The core `Agent` class provides:
 Tools are standard Python functions with:
 - Type hints for parameters
 - Docstrings describing functionality and arguments (used by the model)
-- Optional `@log_function_call` decorator for debugging
+- Optional `@log_function_call` decorator from `utils/` for debugging
 
 The model automatically converts docstrings into function schemas for the API.
 
@@ -130,5 +136,5 @@ Model responses are appended directly from `response.candidates[0].content`
 - The project uses **Gemini 2.5 Flash** model by default (`gemini-2.5-flash`)
 - API key must be set as `GEMINI_API_KEY` environment variable
 - The Agent class maintains conversational context automatically across multiple `run()` calls
-- Function calls are logged to stdout with `[Function Call]` prefix when using the decorator
-- No test suite currently exists in this project
+- Function calls are logged to stdout with `[Function Call]` prefix when using the `@log_function_call` decorator from `utils/`
+- Test suite exists with tests for tools, decorators, and other components
