@@ -31,7 +31,18 @@ uv run pytest tests/test_file_tools.py::TestReadFile::test_read_file_success
 
 ### Run with coverage
 ```bash
-uv run pytest --cov=tools --cov-report=term-missing
+# Run tests with coverage
+uv run coverage run -m pytest
+
+# View coverage report
+uv run coverage report
+
+# Generate HTML report
+uv run coverage html
+# Then open coverage/html/index.html in browser
+
+# Generate all reports (lcov, HTML, XML)
+uv run coverage lcov && uv run coverage html && uv run coverage xml
 ```
 
 ## Test Structure

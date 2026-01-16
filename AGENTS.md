@@ -68,6 +68,35 @@ uv run ruff check .
 uv run ruff check --fix .
 ```
 
+### Testing and Coverage
+```bash
+# Run tests
+uv run pytest
+
+# Run tests with coverage
+uv run coverage run -m pytest
+
+# View coverage report in terminal
+uv run coverage report
+
+# Generate HTML coverage report and view in browser
+uv run coverage html
+open coverage/html/index.html
+
+# Generate all report formats (lcov, HTML, XML)
+uv run coverage lcov && uv run coverage html && uv run coverage xml
+```
+
+**Coverage Configuration**:
+- Coverage is configured in `.coveragerc`
+- Tracks coverage for `adk/`, `agents/`, `tools/`, and `utils/` modules
+- Reports are generated in multiple formats:
+  - Terminal output with missing lines
+  - LCOV: `reports/lcov.info` (used by qlty)
+  - XML: `coverage/coverage.xml`
+  - HTML: `coverage/html/index.html` (for local viewing)
+- GitHub CI automatically uploads coverage to qlty on every push/PR
+
 ### Running Examples
 ```bash
 # Run the main script (demonstrates basic agent with function calling)

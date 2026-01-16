@@ -1,5 +1,9 @@
 # Hello GenAI
 
+![Build](https://github.com/wilsonsilva/hello-genai/actions/workflows/ci.yml/badge.svg)
+[![Maintainability](https://qlty.sh/gh/wilsonsilva/projects/hello-genai/maintainability.svg)](https://qlty.sh/gh/wilsonsilva/projects/hello-genai)
+[![Code Coverage](https://qlty.sh/gh/wilsonsilva/projects/hello-genai/coverage.svg)](https://qlty.sh/gh/wilsonsilva/projects/hello-genai)
+
 A scalable multi-agent architecture demonstrating Google's GenAI (Gemini) capabilities.
 
 ## Quick Start

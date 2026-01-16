@@ -1,0 +1,19 @@
+[run]
+source = adk, agents, tools, utils
+omit = 
+    */tests/*
+    */__pycache__/*
+    */venv/*
+    */.venv/*
+
+[report]
+show_missing = True
+
+[lcov]
+output = reports/lcov.info
+
+[html]
+directory = coverage/html
+
+[xml]
+output = coverage/coverage.xml
