@@ -3,6 +3,7 @@
 ![Build](https://github.com/wilsonsilva/hello-genai/actions/workflows/ci.yml/badge.svg)
 [![Maintainability](https://qlty.sh/gh/wilsonsilva/projects/hello-genai/maintainability.svg)](https://qlty.sh/gh/wilsonsilva/projects/hello-genai)
 [![Code Coverage](https://qlty.sh/gh/wilsonsilva/projects/hello-genai/coverage.svg)](https://qlty.sh/gh/wilsonsilva/projects/hello-genai)
+[![security: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
 
 A scalable multi-agent architecture demonstrating Google's GenAI (Gemini) capabilities.
 
